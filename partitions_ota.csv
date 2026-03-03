@@ -1,0 +1,9 @@
+# Name,   Type, SubType, Offset,  Size
+# Partition table for 4MB flash with OTA and Zigbee support
+nvs,      data, nvs,     0x9000,  0x6000
+phy_init, data, phy,     0xf000,  0x1000
+factory,  app,  factory, 0x10000, 0x100000
+ota_0,    app,  ota_0,   0x110000, 0x100000
+nvs_key,  data, nvs_keys,0x210000, 0x1000
+zb_storage, data, fat,   0x211000, 0x8000
+zb_fct,   data, fat,     0x219000, 0x1000
