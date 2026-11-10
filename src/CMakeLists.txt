@@ -5,6 +5,9 @@ idf_component_register(
                driver
                ieee802154
                esp_driver_gpio
+               esp_driver_tsens
+               app_update
+               esp_partition
                espressif__esp-zigbee-lib
                espressif__esp-zboss-lib
 )

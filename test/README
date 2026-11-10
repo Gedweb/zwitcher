@@ -1,11 +1,22 @@
+Host-side OTA sub-element parser regression tests
+================================================
 
-This directory is intended for PlatformIO Test Runner and project tests.
+Run from the project root (requires g++):
 
-Unit Testing is a software testing method by which individual units of
-source code, sets of one or more MCU program modules together with associated
-control data, usage procedures, and operating procedures, are tested to
-determine whether they are fit for use. Unit testing finds problems early
-in the development cycle.
+    mkdir -p .pio
+    g++ -std=c++11 -Wall -Wextra -Werror -fsanitize=address,undefined -g test/ota_element_parser_test.cpp -o .pio/ota_element_parser_test
+    .pio/ota_element_parser_test
 
-More information about PlatformIO Unit Testing:
-- https://docs.platformio.org/en/latest/advanced/unit-testing/index.html
+Tests cover all 512 block partitions of a small OTA sub-element, including
+fragmented and header-only blocks, malformed tags/lengths, null payloads,
+changing total sizes, oversized payloads, incomplete transfers, and parser reset.
+These tests are standalone host tests, not ESP-IDF/PlatformIO device tests.
+
+Hardware checks still needed:
+- Flood commands across all four endpoints; confirm the final states match and
+  Zigbee stays responsive. Intermediate states may coalesce under load.
+- Observe relay GPIOs during power-up/reset; verify external pull-ups keep
+  active-low inputs OFF before firmware takes control.
+- Abort OTA downloads repeatedly and retry; confirm stable free heap and a
+  successful subsequent update.
+- Query a server without a newer image; confirm no false availability log.
